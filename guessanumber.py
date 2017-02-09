@@ -1,5 +1,5 @@
-#this doesn't completely work. issue with last lines.
-
+#creates a guess a number game. generates a random number, gives player five chances (counts down those chances), and tells player
+#whether they're high or low. Asks player if they want to play again upon completion of each game. 
 import random
 
 play_again = "Y"
