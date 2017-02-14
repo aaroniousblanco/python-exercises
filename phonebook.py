@@ -47,6 +47,7 @@ def phone_book():
             my_file = open('phone_book.pickle', 'r')
             phonebook_dict = pickle.load(my_file)
             print "Here's the updated phonebook: %r" % phonebook_dict
-        else:
+        elif user_selection == "7":
+            print "Goodbye!"
             break
 phone_book()
