@@ -46,17 +46,22 @@ class Goblin(Character):
 
 class Zombie(Character):
     def __init__(self, name):
-        self.health = hero.health + 1
+        self.health = 0
         self.power = 5
         self.name = name
 
-hero = Hero("steve the hero")
-goblin = Goblin("jerry the goblin")
-zombie = Zombie("tommy the zombie")
+    def alive(self):
+        return True
+
+    def print_status(self):
+        print "The zombie cannot die!"
 
 ####CLASSES ABOVE####
 
 def main():
+    hero = Hero("hank the hero")
+    goblin = Goblin("jerry the goblin")
+    zombie = Zombie("tommy the zombie")
 
     while zombie.alive() and hero.alive():
         hero.print_status()
