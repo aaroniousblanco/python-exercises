@@ -1,3 +1,4 @@
+import random
 
 class Character(object):
     def alive(self):
@@ -26,6 +27,17 @@ class Hero(Character):
         self.power = 5
         self.name = name
 
+    def attack(self, other_character):
+        if random.randint(1, 5) == 3: #doubles hero's power with 20% probability
+            self.power = self.power * 2
+        else:
+            pass
+        other_character.health -= self.power
+        print "%s does %d damage to the %s." % (self.name,
+        self.power, other_character)
+        if other_character.health <= 0:
+            print "%s is dead." % other_character
+
 class Goblin(Character):
     def __init__(self, name):
         self.health = 6
@@ -40,7 +52,7 @@ class Zombie(Character):
 
 hero = Hero("steve the hero")
 goblin = Goblin("jerry the goblin")
-zombie = Zombie("tom the zombie")
+zombie = Zombie("tommy the zombie")
 
 ####CLASSES ABOVE####
 
@@ -56,7 +68,7 @@ def main():
         print "> ",
         input = raw_input()
         if input == "1":
-            hero.attack(goblin)
+            hero.attack(zombie)
         elif input == "2":
             zombie.attack(hero)
         elif input == "3":
