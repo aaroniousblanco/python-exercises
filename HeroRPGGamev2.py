@@ -19,7 +19,7 @@ class Character(object):
         if not self.alive():
             return
         print "%s attacks %s" % (self.name, enemy.name)
-        enemy.receive_damage(self.power)
+        enemy.receive_damage(self.power, self.armor, self.evade)
         time.sleep(1.5)
 
     def receive_damage(self, points):
@@ -38,6 +38,8 @@ class Hero(Character):
         self.health = 10
         self.power = 5
         self.coins = 20
+        self.armor = 0
+        self.evade = 0
 
     def attack(self, enemy):
         if random.randint(1, 5) == 3: #doubles hero's power with 20% probability
@@ -46,6 +48,24 @@ class Hero(Character):
             pass
         enemy.receive_damage(self.power)
         time.sleep(1.5)
+
+#ARMOR COMPONENT IS PART OF THIS BELOW (NEED TO COMPLETE EVADE COMPONENT)
+    def receive_damage(self, points, armor, evade):
+        updated_points = (points - self.armor)
+        if self.evade > 0:
+            evasion_prob = self.evade * #left off here
+            if updated_points > 0:
+                self.health -= updated_points
+                print "%s received %d damage." % (self.name, updated_points)
+            else:
+                print "%s received 0 damage, weak!" % (self.name)
+        elif updated_points > 0:
+            self.health -= updated_points
+            print "%s received %d damage." % (self.name, updated_points)
+        else:
+            print "%s received 0 damage, weak!" % (self.name)
+        if self.health <= 0:
+            print "%s is dead." % self.name
 
     def restore(self):
         self.health = 10
@@ -60,12 +80,18 @@ class Hero(Character):
         self.coins += enemy.coins
         print "%s received a bounty of %d coins!" % (self.name, enemy.coins)
 
+    def print_status(self):
+        print "%s has %d health, %d power, and %d armor." % (self.name, self.health,
+        self.power, self.armor)
+
 class Goblin(Character):
     def __init__(self):
         self.name = 'Bob the goblin'
         self.health = 6
         self.power = 2
         self.coins = 5
+        self.armor = 0
+        self.evade = 0
 
 class Wizard(Character):
     def __init__(self):
@@ -73,6 +99,8 @@ class Wizard(Character):
         self.health = 8
         self.power = 1
         self.coins = 6
+        self.armor = 0
+        self.evade = 0
 
     def attack(self, enemy):
         swap_power = random.random() > 0.5
@@ -89,6 +117,8 @@ class Medic(Character):
         self.name = 'Epidemic the medic'
         self.health = 8
         self.power = 2
+        self.armor = 0
+        self.evade = 0
 
     def receive_damage(self, points):#adds 2 points to Medic's health with 20% probability
         self.health -= points
@@ -103,6 +133,8 @@ class Shadow(Character):
         self.name = 'Shady the shadow'
         self.health = 1
         self.power = 2
+        self.armor = 0
+        self.evade = 0
 
     def receive_damage(self, points):#allows character to receive damage 10% of
                                      #the time
@@ -119,6 +151,8 @@ class Zombie(Character):
         self.name = 'Fred the zombie'
         self.health = 0
         self.power = 5
+        self.armor = 0
+        self.evade = 0
 
     def alive(self):
         return True
@@ -136,6 +170,8 @@ class Spicey(Character):
         self.power = 2
         self.spicey_health = 100000
         self.spicey_power = 100000
+        self.armor = 0
+        self.evade = 0
 
     def print_status(self):
         print "%s has %d health and %d power." % (self.name, self.spicey_health,
@@ -148,6 +184,8 @@ class Kellyanne(Character):
         self.name = 'Kellyanne'
         self.health = 8
         self.power = 1
+        self.armor = 0
+        self.evade = 0
 
     def print_status(self):
         print "%s has %d health and %d power." % (self.name, self.health,
@@ -213,15 +251,33 @@ class SuperTonic(object):
     name = 'supertonic'
     def apply(self, hero):
         hero.health = 10
-        print "%s's health increased to %d." % (hero.name, hero.health)
+        print "%s's armor increased to %d." % (hero.name, hero.health)
+
+class Armor(object):
+    cost = 5
+    name = 'armor'
+    def apply(self, hero):
+        hero.armor += 2
+        print "%s's armor increased to %d." % (hero.name, hero.armor)
+
+class Evasion(object):
+        cost = 2
+        name = 'evasion'
+        def apply(self, hero):
+            hero.evade += 2
+            print "%s's evasion increased to %d." % (hero.name, hero.evade)
 
 class Store(object):
     # If you define a variable in the scope of a class:
     # This is a class variable and you can access it like
     # Store.items => [Tonic, Sword]
-    items = [Tonic, Sword, SuperTonic]
+    items = [Tonic, Sword, SuperTonic, Armor, Evasion]
     def do_shopping(self, hero):
-        while hero.coins > 0:
+        while True:
+            if hero.coins <= 0:
+                print "====================="
+                print "Sorry, you're all out of coins!"
+                break
             print "====================="
             print "Welcome to the store!"
             print "====================="
@@ -234,6 +290,8 @@ class Store(object):
             input = int(raw_input("> "))
             if input == 10:
                 break
+            elif input > (len(Store.items)):
+                print "No such product exists in our inventory!"
             else:
                 ItemToBuy = Store.items[input - 1]
                 item = ItemToBuy()
@@ -241,8 +299,6 @@ class Store(object):
                     print "You can't afford that!"
                 else:
                     hero.buy(item)
-        print "====================="
-        print "Sorry, you're all out of coins!"
 
 hero = Hero()
 enemies = [Goblin(), Wizard(), Zombie(), Shadow(), Medic(), Spicey(), Kellyanne()]
