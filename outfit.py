@@ -52,7 +52,7 @@ def clothing_selection(season, occasion, shoeitem, topitem, bottomitem):
     if bottomitem == 'casual bottoms' or bottomitem == 'professional bottoms' or bottomitem == 'nightout bottoms':
         bottom_header = "BOTTOM SELECTION"
 #the code below formats the rest of the terminal printout for the clothing combos.
-    print "Alright, how about this? "
+    print "How about this? "
     print ""
     header = shoe_header + "    |    " + top_header + "    |   " + bottom_header
     print header
@@ -165,16 +165,16 @@ def main_loop():
                         pass
             except IOError:
                 print "You have no favorites currently."
-        season = raw_input("What's the weather like today? (1=winter 2=spring 3=summer 4=fall) ")
-        print ""
-        if season == "1":
-            print "Ok, it's on the colder side. \nWe'll put together something warm for you."
-        elif season == "2":
-            print "Yay spring!"
-        elif season == "3":
-            print "Hot and muggy, eh? \nWe'll keep it on the light and airy side then."
-        elif season == "4":
-            print "We know it's hard to plan for fall weather, \nso if you're extra picky, we'll understand!"
+            season = raw_input("What's the weather like today? (1=winter 2=spring 3=summer 4=fall) ")
+            print ""
+            if season == "1":
+                print "Ok, it's on the colder side. \nWe'll put together something warm for you."
+            elif season == "2":
+                print "Yay spring!"
+            elif season == "3":
+                print "Hot and muggy, eh? \nWe'll keep it on the light and airy side then."
+            elif season == "4":
+                print "We know it's hard to plan for fall weather, \nso if you're extra picky, we'll understand!"
         time.sleep(3)
         os.system("clear")
         occasion = raw_input("And, what's the occasion for your outfit? \n(1=Professional 2=A Night Out 3=Casual) ")
@@ -205,7 +205,7 @@ def main_loop():
                 print "\n"
                 print "                You're gonna look great!"
                 print ""
-                print "P.S Your selection was saved to your worn outfits list."
+                print "P.S. Your selection was saved to your worn outfits list."
                 pastoutfitsdata.append(currentoutfitdata)
                 pastoutfits = open('pastoutfits.pickle', 'ab')
                 pickle.dump(pastoutfitsdata, pastoutfits)
