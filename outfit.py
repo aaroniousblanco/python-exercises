@@ -17,11 +17,11 @@ pastoutfitsdata = []
 currentoutfitdata = []
 favoutfitdata = []#empty list for saving favorited outfits
 
-#clothing_selection function takes in as arguments, the season and occasion
-#selection from the user with raw_input calls in the main loop
-#(randomized_outfit). It also takes in the appropriate occasion
-#selections for shoes, tops, and bottoms, based on the occasion selected by
-#the user in the main loop below.
+# clothing_selection function takes in as arguments, the season and occasion
+# selection from the user with raw_input calls in the main loop
+# (randomized_outfit). It also takes in the appropriate occasion
+# selections for shoes, tops, and bottoms, based on the occasion selected by
+# the user in the main loop below.
 def clothing_selection(season, occasion, shoeitem, topitem, bottomitem):
 #ifs below convert the argument from season selection prompt (1-4) to an alias
 #(season2).
@@ -90,101 +90,136 @@ def clothing_selection(season, occasion, shoeitem, topitem, bottomitem):
 
 
 def main_loop():
-    os.system("clear")
-    print ""
-    print "Here's what we picked out for you the \nlast time we worked together: "
-    print ""
-    lastoutfit = open('lastoutfit.pickle', 'rb')
-    lastoutfitdata = pickle.load(lastoutfit)
-    print "Shoes:"
-    print 'Color: %s' % lastoutfitdata[0]["color"]
-    print "Style: %s" % lastoutfitdata[0]['style']
-    print "Brand: %s" % lastoutfitdata[0]['brand']
-    print "Notes: %s" % lastoutfitdata[0]['notes']
-    print ""
-    print "Top: "
-    print "Color: %s" % lastoutfitdata[1]['color']
-    print "Style: %s" % lastoutfitdata[1]['style']
-    print "Brand: %s" % lastoutfitdata[1]['brand']
-    print "Notes: %s" % lastoutfitdata[1]['notes']
-    print ""
-    print "Bottom: "
-    print "Color: %s" % lastoutfitdata[2]['color']
-    print "Style: %s" % lastoutfitdata[2]['style']
-    print "Brand: %s" % lastoutfitdata[2]['brand']
-    print "Notes: %s" % lastoutfitdata[2]['notes']
-    print ""
-    lastoutfit.close()
-    favorite = raw_input("Would you like to add this to your \nfavorites list? (y or n) ").lower()
-    print ""
-    if favorite == "y":
-        favoutfitdata.append(lastoutfitdata)
-        f = open('favoriteoutfits.pickle', 'ab')
-        pickle.dump(favoutfitdata, f)
-        f.close()
-        print "Cool, we've added the outfit to your favorites."
-        time.sleep(2)
+    codebreaker = True
+    while codebreaker == True:
         os.system("clear")
-    else:
-        os.system("clear")
-        time.sleep(1)
-    print "Ok, we need a little info before we put \ntogether today's outfit selection."
-    time.sleep(2)
-    print ""
-    season = raw_input("What's the weather like today? \n(1=winter 2=spring 3=summer 4=fall) ")
-    print ""
-    if season == "1":
-        print "Ok, it's on the colder side. \nWe'll put together something warm for you."
-    elif season == "2":
-        print "Yay spring!"
-    elif season == "3":
-        print "Hot and muggy, eh? \nWe'll keep it on the light and airy side then."
-    elif season == "4":
-        print "We know it's hard to plan for fall weather, \nso if you're extra picky, we'll understand!"
-    time.sleep(4)
-    os.system("clear")
-    occasion = raw_input("And, what's the occasion for your outfit? \n(1=Professional 2=A Night Out 3=Casual) ")
-    print ""
-    print "Alright, thanks for the info. Your selection is coming right up!"
-    time.sleep(2)
-    os.system("clear")
-    print "\n"
-    immediate_eval = False
-    while immediate_eval == False:
-        if occasion == "1":
-            shoeitem = 'professional shoes'
-            topitem = 'professional tops'
-            bottomitem = 'professional bottoms'
-        elif occasion == "2":
-            shoeitem = 'nightout shoes'
-            topitem = 'nightout tops'
-            bottomitem = 'nightout bottoms'
-        elif occasion == "3":
-            shoeitem = 'casual shoes'
-            topitem = 'casual tops'
-            bottomitem = 'casual bottoms'
-        clothing_selection(season, occasion, shoeitem, topitem, bottomitem)
-        immediate = raw_input("Would you like another selection? (y or n) ").lower()
-        if immediate == "n":
+        print ""
+        print "Here's what we picked out for you the \nlast time we worked together: "
+        print ""
+        lastoutfit = open('lastoutfit.pickle', 'rb')
+        lastoutfitdata = pickle.load(lastoutfit)
+        print "Shoes:"
+        print 'Color: %s' % lastoutfitdata[0]["color"]
+        print "Style: %s" % lastoutfitdata[0]['style']
+        print "Brand: %s" % lastoutfitdata[0]['brand']
+        print "Notes: %s" % lastoutfitdata[0]['notes']
+        print ""
+        print "Top: "
+        print "Color: %s" % lastoutfitdata[1]['color']
+        print "Style: %s" % lastoutfitdata[1]['style']
+        print "Brand: %s" % lastoutfitdata[1]['brand']
+        print "Notes: %s" % lastoutfitdata[1]['notes']
+        print ""
+        print "Bottom: "
+        print "Color: %s" % lastoutfitdata[2]['color']
+        print "Style: %s" % lastoutfitdata[2]['style']
+        print "Brand: %s" % lastoutfitdata[2]['brand']
+        print "Notes: %s" % lastoutfitdata[2]['notes']
+        print ""
+        lastoutfit.close()
+        favorite = raw_input("Would you like to add this to your \nfavorites list? (y or n) ").lower()
+        print ""
+        if favorite == "y":
+            favoutfitdata.append(lastoutfitdata)
+            f = open('favoriteoutfits.pickle', 'ab')
+            pickle.dump(favoutfitdata, f)
+            f.close()
+            print "Cool, we've added the outfit to your favorites."
+            time.sleep(2)
+            os.system("clear")
+        else:
             os.system("clear")
             time.sleep(1)
-            print "\n"
-            print "                You're gonna look great!"
-            print ""
-            print "P.S Your selection will be saved to your worn outfits list."
-            pastoutfitsdata.append(currentoutfitdata)
-            pastoutfits = open('pastoutfits.pickle', 'ab')
-            pickle.dump(pastoutfitsdata, pastoutfits)
-            pastoutfits.close() #This saves and closes the datafile
-            lastoutfit = open('lastoutfit.pickle', 'wb')
-            pickle.dump(currentoutfitdata, lastoutfit)
-            lastoutfit.close() #This s
-            break
-        elif immediate == "y":
-            immediate_eval = False
-            os.system("clear")
-            print "We're putting together your next selection."
+        print "Ok, we need a little info before we put \ntogether today's outfit selection."
+        time.sleep(2)
+        print ""
+        season = raw_input("""What's the weather like today? (1=winter 2=spring 3=summer 4=fall)
+    **Enter 5 if you'd like to check out your favorites list.**""")
+        print ""
+        if season == "1":
+            print "Ok, it's on the colder side. \nWe'll put together something warm for you."
+        elif season == "2":
+            print "Yay spring!"
+        elif season == "3":
+            print "Hot and muggy, eh? \nWe'll keep it on the light and airy side then."
+        elif season == "4":
+            print "We know it's hard to plan for fall weather, \nso if you're extra picky, we'll understand!"
+        elif season == "5":
+            "Feeling nostalgic, huh?"
             time.sleep(2)
-            print ""
+            objects = []
+            try:
+                with (open("favoriteoutfits.pickle", "rb")) as openfile:
+                    while True:
+                        try:
+                            objects.append(pickle.load(openfile))
+                        except EOFError:
+                            break
+                    print "Here are your favorites: "
+                    print objects #still need to format the favorite list
+                    nostalgic = raw_input("Are you planning on going with a favorite? (y or n) ")
+                    if nostalgic == 'y':
+                        print "You're gonna look great!"
+                        break
+                    else:
+                        pass
+            except IOError:
+                print "You have no favorites currently."
+        season = raw_input("What's the weather like today? (1=winter 2=spring 3=summer 4=fall) ")
+        print ""
+        if season == "1":
+            print "Ok, it's on the colder side. \nWe'll put together something warm for you."
+        elif season == "2":
+            print "Yay spring!"
+        elif season == "3":
+            print "Hot and muggy, eh? \nWe'll keep it on the light and airy side then."
+        elif season == "4":
+            print "We know it's hard to plan for fall weather, \nso if you're extra picky, we'll understand!"
+        time.sleep(3)
+        os.system("clear")
+        occasion = raw_input("And, what's the occasion for your outfit? \n(1=Professional 2=A Night Out 3=Casual) ")
+        print ""
+        print "Alright, thanks for the info. Your selection is coming right up!"
+        time.sleep(2)
+        os.system("clear")
+        print "\n"
+        immediate_eval = False
+        while immediate_eval == False:
+            if occasion == "1":
+                shoeitem = 'professional shoes'
+                topitem = 'professional tops'
+                bottomitem = 'professional bottoms'
+            elif occasion == "2":
+                shoeitem = 'nightout shoes'
+                topitem = 'nightout tops'
+                bottomitem = 'nightout bottoms'
+            elif occasion == "3":
+                shoeitem = 'casual shoes'
+                topitem = 'casual tops'
+                bottomitem = 'casual bottoms'
+            clothing_selection(season, occasion, shoeitem, topitem, bottomitem)
+            immediate = raw_input("Would you like another selection? (y or n) ").lower()
+            if immediate == "n":
+                os.system("clear")
+                time.sleep(1)
+                print "\n"
+                print "                You're gonna look great!"
+                print ""
+                print "P.S Your selection was saved to your worn outfits list."
+                pastoutfitsdata.append(currentoutfitdata)
+                pastoutfits = open('pastoutfits.pickle', 'ab')
+                pickle.dump(pastoutfitsdata, pastoutfits)
+                pastoutfits.close() #This saves and closes the datafile
+                lastoutfit = open('lastoutfit.pickle', 'wb')
+                pickle.dump(currentoutfitdata, lastoutfit)
+                lastoutfit.close() #This s
+                codebreaker = False
+                break
+            elif immediate == "y":
+                immediate_eval = False
+                os.system("clear")
+                print "We're putting together your next selection."
+                time.sleep(2)
+                print ""
 
 main_loop()
